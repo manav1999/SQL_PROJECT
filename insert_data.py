@@ -1,4 +1,4 @@
-import pandas as pd
+
 import datetime
 
 def daily_routine():
