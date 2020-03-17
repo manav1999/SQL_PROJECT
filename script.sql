@@ -41,9 +41,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sqlproject`.`PROJECT/SELF_LEARNING`
+-- Table `sqlproject`.`PROJECT`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sqlproject`.`PROJECT/SELF_LEARNING` (
+CREATE TABLE IF NOT EXISTS `sqlproject`.`PROJECT` (
   `PROJECT_ID` INT NOT NULL,
   `PROJECT_NAME` VARCHAR(45) NOT NULL,
   `HOURS_SPENT` DECIMAL(24) NULL,
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `sqlproject`.`DAILY_ROUTINE` (
     ON UPDATE NO ACTION,
   CONSTRAINT `DATE`
     FOREIGN KEY (`DATE`)
-    REFERENCES `sqlproject`.`PROJECT/SELF_LEARNING` (`DATE`)
+    REFERENCES `sqlproject`.`PROJECT` (`DATE`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
