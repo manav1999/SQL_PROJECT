@@ -41,20 +41,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sqlproject`.`PROJECT`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sqlproject`.`PROJECT` (
-  `PROJECT_ID` INT NOT NULL,
-  `PROJECT_NAME` VARCHAR(45) NOT NULL,
-  `HOURS_SPENT` DECIMAL(24) NULL,
-  `DATE` DATE NOT NULL,
-  PRIMARY KEY (`PROJECT_ID`, `DATE`),
-  UNIQUE INDEX `PROJECT_ID_UNIQUE` (`PROJECT_ID` ASC) VISIBLE,
-  UNIQUE INDEX `DATE_UNIQUE` (`DATE` ASC) VISIBLE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `sqlproject`.`DAILY_ROUTINE`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `sqlproject`.`DAILY_ROUTINE` (
@@ -69,12 +55,19 @@ CREATE TABLE IF NOT EXISTS `sqlproject`.`DAILY_ROUTINE` (
     FOREIGN KEY (`DATE`)
     REFERENCES `sqlproject`.`QUALITY_INDEX` (`DATE`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `DATE`
-    FOREIGN KEY (`DATE`)
-    REFERENCES `sqlproject`.`PROJECT` (`DATE`)
-    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `sqlproject`.`PROJECT`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sqlproject`.`PROJECT` (
+  `PROJECT_ID` INT NOT NULL,
+  `PROJECT_NAME` VARCHAR(45) NOT NULL,
+  `HOURS_SPENT` DECIMAL(24) NULL,
+  PRIMARY KEY (`PROJECT_ID`),
+  UNIQUE INDEX `PROJECT_ID_UNIQUE` (`PROJECT_ID` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
