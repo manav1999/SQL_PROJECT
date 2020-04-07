@@ -24,12 +24,10 @@ def quality_Index():
 
 def project():
 	'''takes input for project hours from user'''
-	 p_id = int(input("project"))
-	 p_name=input("Project name ")
-	 hs=int(input("hourse spent on this project"))
-	 return [p_id,p_name,hs]
-
-
+	p_id = int(input("project"))
+	p_name=input("Project name ")
+	hs=int(input("hourse spent on this project"))
+	return [p_id,p_name,hs]
 
 
 
