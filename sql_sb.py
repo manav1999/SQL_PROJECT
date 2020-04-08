@@ -24,10 +24,10 @@ def connect_db(cursor):
         if err.errno==errorcode.ER_BAD_DB_ERROR:
             create_db(cursor)
             print("Database {} created successfully ".format("sqlpriject"))
-            cursor.close()
+            
         else:
             print(err)
-            cursor.close()
+            
             
 def create_db(cursor):
     '''creates database '''

@@ -2,7 +2,7 @@ import sql_sb
 import mysql.connector
 from mysql.connector import errorcode
 
-def create_tables(**tables):
+def create_tables(tables):
     cnx=sql_sb.connect_sql()
     if cnx is None:
         print("unable to execute connect_sql")
@@ -22,73 +22,44 @@ def create_tables(**tables):
     cursor.close()
     cnx.close()            
 TABLES = {}
-TABLES['employees'] = (
-    "CREATE TABLE `employees` ("
-    "  `emp_no` int(11) NOT NULL AUTO_INCREMENT,"
-    "  `birth_date` date NOT NULL,"
-    "  `first_name` varchar(14) NOT NULL,"
-    "  `last_name` varchar(16) NOT NULL,"
-    "  `gender` enum('M','F') NOT NULL,"
-    "  `hire_date` date NOT NULL,"
-    "  PRIMARY KEY (`emp_no`)"
-    ") ENGINE=InnoDB")
+TABLES['USER'] = (
+    "CREATE TABLE IF NOT EXISTS `sqlproject`.`USER` ("
+    "  `USERNAME` VARCHAR(45) NOT NULL,"
+    "  `PASSWORD` VARCHAR(45) NOT NULL,"
+    "  `U_ID` CHAR(5) NOT NULL,"
+    "  PRIMARY KEY (`U_ID`),"
+    "  UNIQUE INDEX `U_ID_UNIQUE` (`U_ID` ASC) VISIBLE,"
+    "  UNIQUE INDEX `USERNAME_UNIQUE` (`USERNAME` ASC) VISIBLE"
+    ") ENGINE=InnoDB;")
+    
+TABLES['QUALITY INDEX'] = (
+    "CREATE TABLE IF NOT EXISTS `sqlproject`.`QUALITY_INDEX` ("
+    "  `QUALITY_OF_SLEEP (1-10)` INT NULL,"
+    "  `OVERALL_HAPPINESS (1-10)` INT NULL,"
+    " `COMMENT` VARCHAR(45) NULL,"
+    " `DATE` DATE NOT NULL,"
+    "PRIMARY KEY (`DATE`),"
+    "UNIQUE INDEX `DATE_UNIQUE` (`DATE` ASC) VISIBLE"
+    ")ENGINE=InnoDB;")
+TABLES['DALITY_ROUTINE'] = (
+    "CREATE TABLE IF NOT EXISTS `sqlproject`.`DAILY_ROUTINE` ("
+    "`DATE` DATE NOT NULL,"
+    "`HOURS_OF_SLEEP` DECIMAL(24) NULL,"
+    "`CLASSES_ATTENDED (hrs)` DECIMAL(24) NULL,"
+    "`FITNESS (hrs)` DECIMAL(24) NULL,"
+    "`WEEKEND` TINYINT NOT NULL,"
+    "PRIMARY KEY (`DATE`),"
+    "UNIQUE INDEX `DATE_UNIQUE` (`DATE` ASC) VISIBLE,"
+    "CONSTRAINT `DATE` FOREIGN KEY (`DATE`) REFERENCES `sqlproject`.`QUALITY_INDEX` (`DATE`) ON DELETE NO ACTION ON UPDATE NO ACTION"
+    ")ENGINE=InnoDB;")
+TABLES['PROJECT'] = (
+    "CREATE TABLE IF NOT EXISTS `sqlproject`.`PROJECT` ("
+    "`PROJECT_ID` INT NOT NULL,"
+    "`PROJECT_NAME` VARCHAR(45) NOT NULL,"
+    "`HOURS_SPENT` DECIMAL(24) NULL,"
+    "PRIMARY KEY (`PROJECT_ID`),"
+    "UNIQUE INDEX `PROJECT_ID_UNIQUE` (`PROJECT_ID` ASC) VISIBLE"
+    ")ENGINE=InnoDB;")
 
-TABLES['departments'] = (
-    "CREATE TABLE `departments` ("
-    "  `dept_no` char(4) NOT NULL,"
-    "  `dept_name` varchar(40) NOT NULL,"
-    "  PRIMARY KEY (`dept_no`), UNIQUE KEY `dept_name` (`dept_name`)"
-    ") ENGINE=InnoDB")
-
-TABLES['salaries'] = (
-    "CREATE TABLE `salaries` ("
-    "  `emp_no` int(11) NOT NULL,"
-    "  `salary` int(11) NOT NULL,"
-    "  `from_date` date NOT NULL,"
-    "  `to_date` date NOT NULL,"
-    "  PRIMARY KEY (`emp_no`,`from_date`), KEY `emp_no` (`emp_no`),"
-    "  CONSTRAINT `salaries_ibfk_1` FOREIGN KEY (`emp_no`) "
-    "     REFERENCES `employees` (`emp_no`) ON DELETE CASCADE"
-    ") ENGINE=InnoDB")
-
-TABLES['dept_emp'] = (
-    "CREATE TABLE `dept_emp` ("
-    "  `emp_no` int(11) NOT NULL,"
-    "  `dept_no` char(4) NOT NULL,"
-    "  `from_date` date NOT NULL,"
-    "  `to_date` date NOT NULL,"
-    "  PRIMARY KEY (`emp_no`,`dept_no`), KEY `emp_no` (`emp_no`),"
-    "  KEY `dept_no` (`dept_no`),"
-    "  CONSTRAINT `dept_emp_ibfk_1` FOREIGN KEY (`emp_no`) "
-    "     REFERENCES `employees` (`emp_no`) ON DELETE CASCADE,"
-    "  CONSTRAINT `dept_emp_ibfk_2` FOREIGN KEY (`dept_no`) "
-    "     REFERENCES `departments` (`dept_no`) ON DELETE CASCADE"
-    ") ENGINE=InnoDB")
-
-TABLES['dept_manager'] = (
-    "  CREATE TABLE `dept_manager` ("
-    "  `dept_no` char(4) NOT NULL,"
-    "  `emp_no` int(11) NOT NULL,"
-    "  `from_date` date NOT NULL,"
-    "  `to_date` date NOT NULL,"
-    "  PRIMARY KEY (`emp_no`,`dept_no`),"
-    "  KEY `emp_no` (`emp_no`),"
-    "  KEY `dept_no` (`dept_no`),"
-    "  CONSTRAINT `dept_manager_ibfk_1` FOREIGN KEY (`emp_no`) "
-    "     REFERENCES `employees` (`emp_no`) ON DELETE CASCADE,"
-    "  CONSTRAINT `dept_manager_ibfk_2` FOREIGN KEY (`dept_no`) "
-    "     REFERENCES `departments` (`dept_no`) ON DELETE CASCADE"
-    ") ENGINE=InnoDB")
-
-TABLES['titles'] = (
-    "CREATE TABLE `titles` ("
-    "  `emp_no` int(11) NOT NULL,"
-    "  `title` varchar(50) NOT NULL,"
-    "  `from_date` date NOT NULL,"
-    "  `to_date` date DEFAULT NULL,"
-    "  PRIMARY KEY (`emp_no`,`title`,`from_date`), KEY `emp_no` (`emp_no`),"
-    "  CONSTRAINT `titles_ibfk_1` FOREIGN KEY (`emp_no`)"
-    "     REFERENCES `employees` (`emp_no`) ON DELETE CASCADE"
-    ") ENGINE=InnoDB")
 
 create_tables(TABLES)
