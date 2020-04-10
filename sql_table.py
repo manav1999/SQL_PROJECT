@@ -21,6 +21,22 @@ def create_tables(tables):
                     print(err.msg)
     cursor.close()
     cnx.close()            
+
+def checkTableExists(dbcon, tablename):
+    dbcur = dbcon.cursor()
+    dbcur.execute("""
+        SELECT COUNT(*)
+        FROM information_schema.tables
+        WHERE table_name = '{0}'
+        """.format(tablename.replace('\'', '\'\'')))
+    if dbcur.fetchone()[0] == 1:
+        dbcur.close()
+        return True
+
+    dbcur.close()
+    return False
+
+
 TABLES = {}
 TABLES['USER'] = (
     "CREATE TABLE IF NOT EXISTS `sqlproject`.`USER` ("
@@ -30,8 +46,7 @@ TABLES['USER'] = (
     "  PRIMARY KEY (`U_ID`),"
     "  UNIQUE INDEX `U_ID_UNIQUE` (`U_ID` ASC) VISIBLE,"
     "  UNIQUE INDEX `USERNAME_UNIQUE` (`USERNAME` ASC) VISIBLE"
-    ") ENGINE=InnoDB;")
-    
+    ") ENGINE=InnoDB;")   
 TABLES['QUALITY INDEX'] = (
     "CREATE TABLE IF NOT EXISTS `sqlproject`.`QUALITY_INDEX` ("
     "  `QUALITY_OF_SLEEP (1-10)` INT NULL,"
@@ -61,5 +76,4 @@ TABLES['PROJECT'] = (
     "UNIQUE INDEX `PROJECT_ID_UNIQUE` (`PROJECT_ID` ASC) VISIBLE"
     ")ENGINE=InnoDB;")
 
-
-create_tables(TABLES)
+print(checkTableExists(sql_sb.connect_sql(),"USER"))

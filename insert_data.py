@@ -1,4 +1,3 @@
-import pandas as pd
 import datetime
 
 def daily_routine():
@@ -12,7 +11,7 @@ def daily_routine():
 		return [datetime.date.today(), weekend(datetime.date.today().weekday()),H_S,C_A,F]
 	else:
 		print("Incorrect data ")
-		return {}
+		return []
 
 def quality_Index():
 	''' takes input from the user for quality index '''
