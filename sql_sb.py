@@ -14,6 +14,8 @@ def connect_sql():
             print(err)
          return None
 
+
+
 def connect_db(cursor):
     '''connects to database ,if database doesn't exisit it calles create_db , accepts cursor as an argument'''
     try:

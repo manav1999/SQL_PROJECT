@@ -1,4 +1,5 @@
 import datetime
+import random
 
 def daily_routine():
 	''' takes input from the user for table daily_routine '''
@@ -8,7 +9,7 @@ def daily_routine():
 	F=int(input("Fitness"))
 	if (H_S+C_A++F)<=24:
 		weekend=lambda x : True if(x>=5) else False
-		return [datetime.date.today(), weekend(datetime.date.today().weekday()),H_S,C_A,F]
+		return [datetime.date.today(), H_S,C_A,F,weekend(datetime.date.today().weekday()),]
 	else:
 		print("Incorrect data ")
 		return []
@@ -19,16 +20,21 @@ def quality_Index():
 	QOS=int(input("quality of sleep(1-10)"))
 	QOH=int(input("happiness (1-10)"))
 	co=input("Comment ")
-	return [limiter(QOS),limiter(QOH),co]
+	return [limiter(QOS),limiter(QOH),co,datetime.date.today()]
 
 def project():
 	'''takes input for project hours from user'''
-	p_id = int(input("project"))
+	
 	p_name=input("Project name ")
+	p_id = pid_generate(p_name)
 	hs=int(input("hourse spent on this project"))
 	return [p_id,p_name,hs]
 
 
-
+def pid_generate(p_name):
+	'''generates pid'''
+	a,b=ord(p_name[0]),ord(p_name[-1])
+	a=a+b+random.randint(a,b)
+	return a
 
 
