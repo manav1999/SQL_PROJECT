@@ -39,15 +39,47 @@ def daily_insert():
 
 def project_insert():
     '''inserts data into project table'''
-    data=insert_data.project()
-    add_e=("INSERT INTO project"
-    "(PROJECT_ID,PROJECT_NAME,HOURS_SPENT)"
-    "VALUES(%(PROJECT_ID)s,%(PROJECT_NAME)s,%(HOURS_SPENT)s)")
-    data_list=['PROJECT_ID','PROJECT_NAME','HOURS_SPENT']
-    dic_data={data_list[i]:data[i] for i in range(len(data_list))}
-    push_Data(add_e,dic_data)
+    name,hours=insert_data.project()
+    print(name,hours)
+    cnx=sql_sb.connect_sql()
+    cursor=cnx.cursor()
+    sql_sb.connect_db(cursor)
+    p_id,check=check_pid(cursor,name)
+    if check:
+        query=("UPDATE project SET HOURS_SPENT=HOURS_SPENT + %s ")
+        cursor.execute(query,(hours,))
+        cnx.commit()
+        cnx.close()
+        cursor.close()
+    else:
+        data=[p_id,name,hours]
+        add_e=("INSERT INTO project"
+        "(PROJECT_ID,PROJECT_NAME,HOURS_SPENT)"
+        "VALUES(%(PROJECT_ID)s,%(PROJECT_NAME)s,%(HOURS_SPENT)s)")
+        data_list=['PROJECT_ID','PROJECT_NAME','HOURS_SPENT']
+        dic_data={data_list[i]:data[i] for i in range(len(data_list))}
+        push_Data(add_e,dic_data)  
+    
+def check_pid(cursor,name):
+    ''' this functions checks if the project already exist'''
+    query=("Select PROJECT_ID FROM project WHERE PROJECT_NAME = %s")
+    cursor.execute(query,(name,))
+    a=cursor.fetchall()
+    if a:
+        return a[0][0],True;
+    else:
+        return insert_data.pid_generate(name),False;
+    
+def daily_input():
+    '''calls all the insert fucn'''
+    print("Enter quality Index")
+    qualtiy_insert()
+    print("Enter daily input")
+    daily_insert()
+    print("Enter Project info")
+    project_insert()
 
-project_insert()
+
 
 
 

@@ -1,5 +1,3 @@
-
-
 import mysql.connector
 from mysql.connector import errorcode
 import sql_table

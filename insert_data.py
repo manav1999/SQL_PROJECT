@@ -1,12 +1,13 @@
 import datetime
 import random
+'''takes input from user'''
 
 def daily_routine():
 	''' takes input from the user for table daily_routine '''
 	print("DATE",datetime.date.today()) #for test purposes 
 	H_S=int(input("Amount of sleep "))
 	C_A=int(input("Classes Atteneded "))
-	F=int(input("Fitness"))
+	F=int(input("Workout "))
 	if (H_S+C_A++F)<=24:
 		weekend=lambda x : True if(x>=5) else False
 		return [datetime.date.today(), H_S,C_A,F,weekend(datetime.date.today().weekday()),]
@@ -24,17 +25,19 @@ def quality_Index():
 
 def project():
 	'''takes input for project hours from user'''
-	
-	p_name=input("Project name ")
-	p_id = pid_generate(p_name)
-	hs=int(input("hourse spent on this project"))
-	return [p_id,p_name,hs]
+	p_name=str(input("Project name ")).capitalize()
 
+	hs=int(input("hourse spent on this project"))
+	return p_name,hs;
 
 def pid_generate(p_name):
 	'''generates pid'''
 	a,b=ord(p_name[0]),ord(p_name[-1])
 	a=a+b+random.randint(a,b)
+	if a%2==0:
+		a=a+random.randint(0,a)
+	else:
+		a=a+random.randint(0,b)-2
 	return a
 
 
