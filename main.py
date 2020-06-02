@@ -1,6 +1,8 @@
 import mysql.connector
 from mysql.connector import errorcode
 import sql_table
+import insert_sql
+import plot_data
 
 
 TABLES = {}
@@ -43,3 +45,34 @@ TABLES['PROJECT'] = (
     ")ENGINE=InnoDB;")
 
 sql_table.create_tables(tables=TABLES)
+b=True
+while (b== True ):
+    print("1. Enter Data, 2. Plot ")
+    a=int(input("Enter your choice"))
+    if a==1:
+        insert_sql.daily_input()
+    elif a==2:
+        print("1.DATE vs Hours of sleep,2.DATE vs Classes attended,3.Date vs workout,4.Date vs Quality of sleep,5.Date vs happines,6.Projects")
+        x=int(input())
+        if x==1:
+            plot_data.plot_DvsS()
+        elif x==2:
+            plot_data.plot_DvsC()
+        elif x==3:
+            plot_data.plot_DvsW()
+        elif x==4:
+            plot_data.plot_DvsQOS()
+        elif x==5:
+            plot_data.plot_DvsQOh()
+        elif x==6:
+            plot_data.pro_plot()
+        else:
+            print("Wrong choice")
+
+        
+
+
+
+
+
+    

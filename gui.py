@@ -1,20 +1,29 @@
 from tkinter import *
 import os
-def get_info():
-    global got_values
-    for entry in got_values:
-    	print(entry.get())
+import datetime
 
+def get_info():
+	global got_values
+	global f_list
+	for entry in got_values:
+		f_list.append(entry.get())
+        
+    	# print(entry.get())
+def send_v():
+	return f_list
 got_values=[]
+f_list=[]
 def to_insert():
 	# window.close()
 	window2=Tk()
 	window2.title("For Insert")
+	l=Label(window2,text=str(datetime.date.today()))
+	l.grid(row=0,column=0)
 	window2.minsize(200,400)
 	li=['ms','ts'] #list for values to inserted
 	strvar=StringVar()
 	global got_values
-	r=0
+	r=2
 	c=0
 	for i in li:
 		t1=Label(window2,text=i)
@@ -27,6 +36,8 @@ def to_insert():
 	b1=Button(window2,text="Submit",command=get_info)
 	b1.place(relx=1.0,rely=1.0,anchor=SE)
 	window2.mainloop()
+	window2.destroy()
+
 
 def plot_it():
 	print("hello")

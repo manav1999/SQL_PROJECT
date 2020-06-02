@@ -1,5 +1,6 @@
 import datetime
 import random
+
 '''takes input from user'''
 
 def daily_routine():

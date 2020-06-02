@@ -52,7 +52,7 @@ def d_vs_w(query_dr):
     return d,w;
 
 def d_vs_qos(query_dr):
-    '''fetches date and quality of sleep'''
+    '''fetches date and quality of sleep from quality index'''
     cnx=sql_sb.connect_sql()
     cursor=cnx.cursor()
     sql_sb.connect_db(cursor)
@@ -64,9 +64,55 @@ def d_vs_qos(query_dr):
         q.append(int(i[1]))
     cursor.close()
     cnx.close()
-    return d,w;
+    return d,q;
 
+def d_vs_oh(query_dr):
+    '''this function fetches qualtiy of health and date from quality index'''
+    cnx=sql_sb.connect_sql()
+    cursor=cnx.cursor()
+    sql_sb.connect_db(cursor)
+    cursor.execute(query_dr)
+    d=[]
+    q=[]
+    for i in cursor.fetchall():
+        d.append(np.datetime64(i[0]))
+        q.append(int(i[1]))
+    cursor.close()
+    cnx.close()
+    return d,q;
 
+def pro_plot():
+    '''plots project infromation'''
+    query_dr="SELECT PROJECT_NAME,HOURS_SPENT from project"
+    cnx=sql_sb.connect_sql()
+    cursor=cnx.cursor()
+    sql_sb.connect_db(cursor)
+    cursor.execute(query_dr)
+    d=[]
+    q=[]
+    for i in cursor.fetchall():
+        d.append((i[0]))
+        q.append(int(i[1]))
+    cursor.close()
+    cnx.close()
+    plt.bar(d,q)
+    plt.show()
+
+def plot_DvsQOS():
+    ''''plots date vs qos'''
+    query_dr="SELECT DATE,QOS from daily_routine" 
+    d,q=d_vs_qos(query_dr)
+    print(d)
+    plt.plot(d,s)
+    plt.show()
+
+def plot_DvsQOh():
+    ''''plots date vs qos'''
+    query_dr="SELECT DATE,OH from daily_routine" 
+    d,q=d_vs_oh(query_dr)
+    print(d)
+    plt.plot(d,s)
+    plt.show()
 
 def plot_DvsW():
     '''plots date vs workout'''
@@ -93,7 +139,8 @@ def plot_DvsS():
     plt.show()
 
 
-plot_DvsS()
+
+
 
 
 
