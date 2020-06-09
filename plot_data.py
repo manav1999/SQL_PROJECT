@@ -100,18 +100,18 @@ def pro_plot():
 
 def plot_DvsQOS():
     ''''plots date vs qos'''
-    query_dr="SELECT DATE,QOS from daily_routine" 
+    query_dr="SELECT DATE, QOS from quality_index" 
     d,q=d_vs_qos(query_dr)
     print(d)
-    plt.plot(d,s)
+    plt.plot(d,q)
     plt.show()
 
 def plot_DvsQOh():
     ''''plots date vs qos'''
-    query_dr="SELECT DATE,OH from daily_routine" 
+    query_dr="SELECT DATE, OH from quality_index" 
     d,q=d_vs_oh(query_dr)
     print(d)
-    plt.plot(d,s)
+    plt.plot(d,q)
     plt.show()
 
 def plot_DvsW():

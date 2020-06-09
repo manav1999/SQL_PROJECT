@@ -5,7 +5,8 @@ import insert_sql
 import plot_data
 
 
-TABLES = {}
+TABLES = {} #dictonary of lis of table schema
+
 TABLES['USER'] = (
     "CREATE TABLE IF NOT EXISTS `sqlproject`.`USER` ("
     "  `USERNAME` VARCHAR(45) NOT NULL,"
